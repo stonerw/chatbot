@@ -9,236 +9,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "Structure.h"
 
-typedef struct {
-    char *input;
-    char *output1;
-    char *output2;
-    char *output3;
-}data;
 data database[100];
 char k[200];
-
-char secondmatch(){
-    int l=0;
-    FILE *fp;
-    int i,j;
-    FILE *fps = fopen("in.txt", "r");
-    char c = fgetc(fps);
-    while ( c != EOF )
-    {
-        c = fgetc(fps);
-        if(c == '\n')
-        {   l++; }
-    }
-    fclose(fps);
-    char d[l][100];
-    fp = fopen("in.txt", "r");
-    for(i=0;i<l;i++){
-        for(j=0;;j++){
-            fscanf(fp,"%c",&d[i][j]);
-            if(d[i][j]=='\n')
-            {
-                d[i][j]=' ';
-                j=j+1;
-                for (j=j;j<100;j++)
-                {
-                    d[i][j] = '\0';
-                }
-                break;
-            }
-        }
-    }
-    for(i=0;i<l;i++){
-        if(  (strstr(k,d[i])!=NULL)){
-            break;
-        }
-    }
-    char a='n';
-    int t=0;
-    for(t=0;t<i;t++){
-        if(d[t][0]>='0' && d[t][0]<='9')
-            a=d[t][0];
-    }
-    return a;
-}
-
-int getrand(){
-    int a;
-    srand((unsigned)time(NULL));
-    a = rand();
-    return a;
-}
-
-int firstmatch(){
-    char *c=(char *)malloc(100*sizeof(char));
-    int count=1,e=0;
-    FILE *fp = fopen("data.txt", "rb" ) ;
-    for(int j=0;j<=1000;j++)
-    {
-        int r=1;
-        count=1;
-        
-        while(count<=4)
-        {
-            if(fgets(c,1000 , fp)==NULL){
-                e=1;
-                break;
-            }
-            if(count%4 ==0)
-            {
-                database[j].input= c;
-            }
-            else if(count%4==1)
-            {
-                database[j].output1=c;
-            }
-            else if(count%4==2)
-            {
-                database[j].output2=c;
-            }
-            else if(count%4==3)
-            {
-                database[j].output3=c;
-            }
-            count++;
-            c=(char *)malloc(100*sizeof(char));
-            
-            
-        }
-        if(e==1)
-            break;
-        if(database[j].input)
-        {
-            r=strcmp(database[j].input,k);
-        }
-        if(r==0)
-        {
-            return j;
-        }
-    }
-    return 0;
-}
-
-int dirtyw(){
-    int l=0;
-    FILE *fp;
-    int i,j;
-    FILE *fps = fopen("dirty words.txt", "r");
-    char c = fgetc(fps);
-    while ( c != EOF )
-    {
-        c = fgetc(fps);
-        if(c == '\n')
-        {   l++; }
-    }
-    fclose(fps);
-    char d[l][100];
-    fp = fopen("dirty words.txt", "r");
-    for(i=0;i<l;i++){
-        for(j=0;;j++){
-            fscanf(fp,"%c",&d[i][j]);
-            if(d[i][j]=='\n')
-            {
-                d[i][j]=' ';
-                j=j+1;
-                for (j=j;j<100;j++)
-                {
-                    d[i][j] = '\0';
-                }
-                break;
-            }
-        }
-    }
-    for(i=0;i<l;i++){
-        if(  (strstr(k,d[i])!=NULL)){
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int cheakdirty(char name[]){
-    int l=0;
-    FILE *fp;
-    int i,j;
-    FILE *fps = fopen("dirty words.txt", "r");
-    char c = fgetc(fps);
-    while ( c != EOF )
-    {
-        c = fgetc(fps);
-        if(c == '\n')
-        {   l++; }
-    }
-    fclose(fps);
-    char d[l][100];
-    fp = fopen("dirty words.txt", "r");
-    for(i=0;i<l;i++){
-        for(j=0;;j++){
-            fscanf(fp,"%c",&d[i][j]);
-            if(d[i][j]=='\n'){
-                d[i][j]='\0';
-                break;
-            }
-        }
-    }
-    for(i=0;i<l;i++){
-        if(  (strstr(name,d[i])!=NULL)){
-            return 1;
-        }
-    }
-    return 0;
-}
 char bbq[100];
 char garbage[100];
-void addcon(int s){
-    FILE *fps = fopen("data.txt", "r+");
-    while(fgets(garbage, sizeof(garbage), fps) != NULL)
-    {}
-    if(s==1){
-        printf("please enter your answer.\n");
-        scanf(" % s",bbq);
-        gets(bbq);
-        fprintf(fps,"%s\n",bbq);
-        fprintf(fps,"%s\n",bbq);
-        fprintf(fps,"%s\n",bbq);
-    }
-    if(s==2){
-        printf("please enter your first answer.\n");
-        scanf(" % s",bbq);
-        gets(bbq);
-        fprintf(fps,"%s\n",bbq);
-        fprintf(fps,"%s\n",bbq);
-        printf("please enter your second answer.\n");
-        scanf(" % s",bbq);
-        gets(bbq);
-        fprintf(fps,"%s\n",bbq);
-    }
-    if(s==3){
-        printf("please enter your first answer.\n");
-        scanf(" % s",bbq);
-        gets(bbq);
-        fprintf(fps,"%s\n",bbq);
-        printf("please enter your second answer.\n");
-        scanf(" % s",bbq);
-        gets(bbq);
-        fprintf(fps,"%s\n",bbq);
-        printf("please enter your last answer.\n");
-        scanf(" % s",bbq);
-        gets(bbq);
-        fprintf(fps,"%s\n",bbq);
-    }
-    printf("now please re-enter your question\n");
-    scanf(" % s",bbq);
-    gets(bbq);
-    fprintf(fps,"%s\n",bbq);
-    fclose(fps);
-}
+
 
 
 int main() {
     char name[20];
     char a;
+    int m=0;
     printf("nice to meet you, what is your name?\n");
     for(;;){
         gets(name);
@@ -251,7 +34,7 @@ int main() {
             scanf("%c",&a);
             if(a=='f'){
                 printf("hello, Mrs.");
-                for(int m=0;;m++){
+                for(m=0;;m++){
                     printf("%c",name[m]);
                     if(name[m]=='\0')
                         break;
@@ -259,7 +42,7 @@ int main() {
             }
             if(a=='m'){
                 printf("hello, Mr.");
-                for(int m=0;;m++){
+                for( m=0;;m++){
                     printf("%c",name[m]);
                     if(name[m]=='\0')
                         break;
@@ -282,7 +65,7 @@ int main() {
                 printf("goodbye,bro. we had a nice time.\n");
                 exit(0);
             }
-            if(k[0]=='s'&&k[1]=='e'&&k[2]=='e'&&k[3]=='k'){
+            /*if(k[0]=='s'&&k[1]=='e'&&k[2]=='e'&&k[3]=='k'){
                 for(;;){
                     printf("now please enter the sentence you want to match. press 0 to the main\n");
                     gets(k);
@@ -295,7 +78,7 @@ int main() {
                         printf("the sentence is in the sentence library.\n");
                 }
             }
-            if((k[0]=='i'&&k[1]=='s')||(k[0]=='a'&&k[1]=='r'&&k[2]=='e')||(k[0]=='a'&&k[1]=='m')||(k[0]=='w'&&k[1]=='a'&&k[2]=='s')||(k[0]=='w'&&k[1]=='e'&&k[2]=='r'&&k[3]=='e')||(k[0]=='d'&&k[1]=='o'&&k[2]=='e'&&k[3]=='s')||(k[0]=='d'&&k[1]=='o')||(k[0]=='d'&&k[1]=='i'&&k[2]=='d'))
+           */ if((k[0]=='i'&&k[1]=='s')||(k[0]=='a'&&k[1]=='r'&&k[2]=='e')||(k[0]=='a'&&k[1]=='m')||(k[0]=='w'&&k[1]=='a'&&k[2]=='s')||(k[0]=='w'&&k[1]=='e'&&k[2]=='r'&&k[3]=='e')||(k[0]=='d'&&k[1]=='o'&&k[2]=='e'&&k[3]=='s')||(k[0]=='d'&&k[1]=='o')||(k[0]=='d'&&k[1]=='i'&&k[2]=='d'))
             {
                 printf("absolutely，yes\n");
                 break;
@@ -311,6 +94,7 @@ int main() {
                 break;
             }
             int v;
+            int t=0;
             for (v=0;;v++)
             {
                 if(k[v]=='\0')
@@ -409,7 +193,7 @@ int main() {
                         printf("Is the person you mentioned famous？\n");
                 }
                 else if(secondmatch()=='0'){
-                    for(int t=0;;t++){
+                    for(t=0;;t++){
                         printf("%c",k[t]);
                         if(k[t]=='\0')
                             break;
